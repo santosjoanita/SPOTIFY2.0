@@ -1,0 +1,57 @@
+
+.container {
+  text-align: center; /* centraliza o conteúdo dentro do container */
+  margin-top: 50px;
+  font-family: Arial, sans-serif;
+}
+
+.container h1 {
+  font-size: 210px; /* tamanho L */
+  margin-bottom: 30px;
+  color: #000;
+}
+
+
+.card-container {
+  position: relative;
+  display: inline-block; /* mantém card centrado no meio */
+}
+
+/* Imagem do card */
+/* Para trocar a imagem do gato, altere o src no HTML */
+.card-image {
+  width: 400px;  /* ajuste o tamanho conforme desejar */
+  max-width: 90%; /* responsivo em telas menores */
+  height: auto;
+  border-radius: 20px;
+  display: block;
+}
+
+/* Botão centralizado sobre a imagem */
+.song-link {
+  position: absolute;
+  top: 50%; /* centraliza verticalmente */
+  left: 46%; /* centraliza horizontalmente */
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 15px 100px; /* maior comprimento do fundo */
+  font-size: 18px; /* tamanho A */
+  text-decoration: none;
+  color: #000;
+  border-radius: 10px;
+  font-weight: bold;
+  white-space: nowrap; /* impede quebra do texto */
+}
+
+@media (max-width: 768px) {
+  .container h1 {
+    font-size: 120px; /* reduz o título em telas menores */
+  }
+  .card-image {
+    width: 90%; /* imagem ocupa quase toda a largura */
+  }
+  .song-link {
+    padding: 12px 30px; /* ajusta o botão em telas menores */
+    font-size: 14px;
+  }
+}
