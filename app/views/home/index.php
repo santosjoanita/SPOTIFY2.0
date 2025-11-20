@@ -18,10 +18,42 @@
   <h1>Melo Music</h1>
   <h3>THE ULTIMATE MUSIC BROWSER</h3>
 
- <div class="container">
-  <div class="card-container">
-    <img src="assets/img/cat_songs.jpg" class="card-image" alt="Cat Songs">
-    <a href="<?php echo $url_alias;?>/Songs" class="song-link">Songs</a>
+ <div class="container home-content">
+  <div class="row gx-4 gy-4">
+    <div class="col-md-6">
+      <div class="card-container">
+        <img src="<?php echo $url_alias; ?>/assets/img/cat_songs.jpg" class="card-image big" alt="Cat Songs">
+        <a href="<?php echo $url_alias;?>/Songs" class="card-link">SONGS</a>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card-container">
+        <img src="<?php echo $url_alias; ?>/assets/img/car_oldschool.jpg" class="card-image big" alt="Old School">
+        <a href="<?php echo $url_alias;?>/Genres/oldschool" class="card-link">OLD SCHOOL</a>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card-container">
+        <img src="<?php echo $url_alias; ?>/assets/img/boots_house.jpg" class="card-image small" alt="House">
+        <a href="<?php echo $url_alias;?>/Genres/house" class="card-link">HOUSE</a>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card-container">
+        <img src="<?php echo $url_alias; ?>/assets/img/techno_concert.jpg" class="card-image small" alt="Tecno">
+        <a href="<?php echo $url_alias;?>/Genres/techno" class="card-link">TECNO</a>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card-container">
+        <img src="<?php echo $url_alias; ?>/assets/img/records_albums.jpg" class="card-image small" alt="Albums">
+        <a href="<?php echo $url_alias;?>/Albums" class="card-link">ALBUMS</a>
+      </div>
+    </div>
   </div>
 </div>
 

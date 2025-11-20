@@ -1,58 +1,85 @@
 
+/* Page container (keeps Bootstrap .container behavior) */
 .container {
-  text-align: center; /* centraliza o conteúdo dentro do container */
-  margin-top: 50px;
+  text-align: center;
+  margin-top: 40px;
   font-family: Arial, sans-serif;
 }
 
 .container h1 {
-  font-size: 210px; /* tamanho L */
-  margin-bottom: 30px;
+  font-size: 64px; /* título grande, mas mais realista */
+  margin-bottom: 8px;
   color: #000;
   font-family: 'Times New Roman', Times, serif;
+}
+
+.container h3 {
+  font-size: 12px;
+  letter-spacing: 2px;
+  margin-bottom: 30px;
+  color: #555;
 }
 
 
 .card-container {
   position: relative;
-  display: inline-block; /* mantém card centrado no meio */
+  overflow: hidden;
+  border-radius: 12px;
 }
 
-/* Imagem do card */
-/* Para trocar a imagem do gato, altere o src no HTML */
+/* Base for card images */
 .card-image {
-  width: 400px;  /* ajuste o tamanho conforme desejar */
-  max-width: 90%; /* responsivo em telas menores */
-  height: auto;
-  border-radius: 20px;
+  width: 100%;
   display: block;
+  object-fit: cover;
+  border-radius: 12px;
 }
 
-/* Botão centralizado sobre a imagem */
-.song-link {
+/* Size variations */
+.card-image.big {
+  height: 360px;
+}
+
+.card-image.small {
+  height: 240px;
+}
+
+/* Overlay central button/link */
+.card-link {
   position: absolute;
-  top: 50%; /* centraliza verticalmente */
-  left: 46%; /* centraliza horizontalmente */
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
-  background-color: rgba(255, 255, 255, 0.9);
-  padding: 15px 100px; /* maior comprimento do fundo */
-  font-size: 18px; /* tamanho A */
+  background-color: rgba(255,255,255,0.9);
+  padding: 12px 28px;
+  font-size: 16px;
   text-decoration: none;
   color: #000;
-  border-radius: 10px;
-  font-weight: bold;
-  white-space: nowrap; /* impede quebra do texto */
+  border-radius: 6px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* Hover effect */
+.card-container:hover .card-image {
+  transform: scale(1.03);
+  transition: transform 0.35s ease;
 }
 
 @media (max-width: 768px) {
   .container h1 {
-    font-size: 120px; /* reduz o título em telas menores */
+    font-size: 36px;
   }
-  .card-image {
-    width: 90%; /* imagem ocupa quase toda a largura */
+  .card-image.big {
+    height: 220px;
   }
-  .song-link {
-    padding: 12px 30px; /* ajusta o botão em telas menores */
+  .card-image.small {
+    height: 180px;
+  }
+  .card-link {
+    padding: 10px 18px;
     font-size: 14px;
   }
 }
+
+/* end of file */
