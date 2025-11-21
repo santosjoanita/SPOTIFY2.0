@@ -22,7 +22,7 @@ function toggleDeleteMode() {
     });
 
     if (isHidden) {
-        mainBtn.textContent = "Cancelar";
+        mainBtn.textContent = "Cancel";
         mainBtn.style.background = "#777";
     } else {
         mainBtn.textContent = "Remover Música";
