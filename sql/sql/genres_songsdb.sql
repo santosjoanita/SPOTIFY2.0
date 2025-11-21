@@ -19,4 +19,7 @@ INSERT INTO genres (id, genre) VALUES
 (18, 'Folk'),
 (19, 'K-Pop'),
 (20, 'Lo-Fi'),
-(21, 'Soundtrack');
+(21, 'Soundtrack'),
+(22, 'House'),
+(23, 'Techno');
+

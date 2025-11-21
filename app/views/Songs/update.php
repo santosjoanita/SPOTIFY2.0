@@ -1,28 +1,47 @@
 <?php
-// debug
-// print_r($data);
+if (empty($data['song'])) {
+    echo '<h3>Música não encontrada.</h3>';
+    echo '<a href="' . $url_alias . '/Songs">Voltar</a>';
+    return;
+}
+$song = $data['song'];
 ?>
 
-<h2>Editar Filme</h2>
-<form action="<?php echo $url_alias;?>/movie/update/<?php echo $data['movie'][0]['id'];?>" method="POST">
-  <label for="title">Título:</label>
-  <input type="text" id="title" name="title" value="<?php echo $data['movie'][0]['title']; ?>" required><br>
+<h2>Editar Música</h2>
+<form action="<?= $url_alias ?>/Songs/update/<?= htmlspecialchars($song['id']) ?>" method="POST" class="row gx-3 gy-2">
+  <div class="col-md-6">
+    <label for="title">Título:</label>
+    <input type="text" id="title" name="title" value="<?= htmlspecialchars($song['title']) ?>" class="form-control" required>
+  </div>
+  <div class="col-md-6">
+    <label for="artist">Artista:</label>
+    <input type="text" id="artist" name="artist" value="<?= htmlspecialchars($song['artist'] ?? '') ?>" class="form-control" required>
+  </div>
 
-  <label for="imdb_rating">IMDB Rating:</label>
-  <input type="number" step="0.1" id="imdb_rating" name="imdb_rating" value="<?php echo $data['movie'][0]['imdb_rating']; ?>" required><br>
+  <div class="col-md-6">
+    <label for="genre_id">Género:</label>
+    <select id="genre_id" name="genre_id" class="form-select">
+      <option value="">-- (sem género) --</option>
+      <?php if (!empty($data['genres'])): foreach ($data['genres'] as $g): ?>
+        <option value="<?= htmlspecialchars($g['id']) ?>" <?= (isset($song['genre_id']) && $song['genre_id'] == $g['id']) ? 'selected' : '' ?>><?= htmlspecialchars($g['genre']) ?></option>
+      <?php endforeach; endif; ?>
+    </select>
+  </div>
 
-  <label for="release_year">Ano de Lançamento:</label>
-  <input type="number" id="release_year" name="release_year" value="<?php echo $data['movie'][0]['release_year']; ?>" required><br>
+  <div class="col-md-6">
+    <label for="album">Álbum:</label>
+    <input type="text" id="album" name="album" value="<?= htmlspecialchars($song['album'] ?? '') ?>" class="form-control">
+  </div>
 
-  <label for="genres_id">Género:</label>
-  <select id="genres_id" name="genres_id" required>
-    <?php foreach ($data['genres'] as $genre) {?>
-      <option value="<?php echo $genre['id']; ?>" <?php echo ($data['movie'][0]['genres_id'] == $genre['id']) ? 'selected' : ''; ?>>
-        <?php echo $genre['genre']; ?>
-      </option>
-    <?php } ?>
-  </select><br>
+  <div class="col-md-3">
+    <label for="year">Ano:</label>
+    <input type="number" id="year" name="year" value="<?= htmlspecialchars($song['year'] ?? '') ?>" class="form-control">
+  </div>
 
-  <button type="submit">Atualizar Filme</button>
+  <!-- Cover URL removed from update form -->
+
+  <div class="col-12 mt-2">
+    <button type="submit" class="btn btn-primary">Atualizar Música</button>
+    <a href="<?= $url_alias ?>/Songs" class="btn btn-secondary">Cancelar</a>
+  </div>
 </form>
-<a href="<?php echo $url_alias;?>/movie">Voltar</a>

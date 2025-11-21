@@ -1,48 +1,25 @@
-<pre>
-<?php 
-// debug
-// print_r($data);
-?>
-</pre>
-
 <?php
-if (count($data['movies']) == 0) {
-?>
-  <h1>O filme não existe na nossa base de dados...</h1>
-<?php 
-} else {
-  $idGenero = $data['movies'][0]['genres_id'];
-  $genero = array_filter($data['genres'], function ($genre) use ($idGenero) {
-      return $genre['id'] == $idGenero;
-  });
-  $values = array_values($genero);
-  $genero_descr = $values[0]['genre'];
-?>
-
-  <div>
-  <?php
-  echo "Nome: " . $data['movies'][0]['title'];
-  ?>
-  </div>
-
-  <div>
-  <?php
-  echo "IMDB: " . $data['movies'][0]['imdb_rating'];
-  ?>
-  </div>
-
-  <div>
-  <?php
-  echo "Ano: " . $data['movies'][0]['release_year'];
-  ?>
-  </div>
-
-  <div>
-  <?php
-  echo "Género: " . $genero_descr;
-  ?>
-  </div>
-<?php 
+// Show single song details
+if (empty($data['song'])) {
+    echo '<h3>Não existe essa música na base de dados.</h3>';
+    echo '<a href="' . $url_alias . '/Songs">Voltar</a>';
+    return;
 }
+
+$song = $data['song'];
+$genres = $data['genres'] ?? [];
+$genreLabel = '';
+foreach ($genres as $g) { if (isset($song['genre_id']) && $g['id'] == $song['genre_id']) { $genreLabel = $g['genre']; break; } }
 ?>
-<a href="<?php echo $url_alias;?>/movie">Voltar</a>
+
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title"><?= htmlspecialchars($song['title']) ?></h4>
+    <p><strong>Artista:</strong> <?= htmlspecialchars($song['artist'] ?? '') ?></p>
+    <p><strong>Álbum:</strong> <?= htmlspecialchars($song['album'] ?? '') ?></p>
+    <p><strong>Ano:</strong> <?= htmlspecialchars($song['year'] ?? '') ?></p>
+    <p><strong>Género:</strong> <?= htmlspecialchars($genreLabel) ?></p>
+    <a href="<?= $url_alias ?>/Songs" class="btn btn-secondary">Voltar</a>
+    <a href="<?= $url_alias ?>/Songs/edit/<?= htmlspecialchars($song['id']) ?>" class="btn btn-primary">Editar</a>
+  </div>
+</div>

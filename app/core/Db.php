@@ -44,32 +44,40 @@ class Db {
   
   // precisa de ser mais genérica porque, nesta versão, apenas responde corretamente para operações sobre a tabela "movies"
   public function execQuery(string $sql, array $parameters = []) {
-      $stmt = $this->conn->prepare($sql);
-      $this->setParameters($stmt, $parameters);
-      if (!(stripos(trim($sql), 'DELETE') === 0)) {
+      try {
+        $stmt = $this->conn->prepare($sql);
+        if ($stmt === false) {
+          // prepare failed — log and return false
+          error_log('DB prepare failed: ' . $this->conn->error);
+          return false;
+        }
+        $this->setParameters($stmt, $parameters);
         $stmt->execute();
-      }
 
-      if (stripos(trim($sql), 'SELECT') === 0) { 
-          $response = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-      } elseif (stripos(trim($sql), 'INSERT') === 0) { 
-          $lastId = $this->conn->insert_id; // ID do registo inserido
-          $result = $this->execQuery('SELECT * FROM movies WHERE id = ?', ['i', [$lastId]]); 
-          $response = $result[0];
-      } elseif (stripos(trim($sql), 'UPDATE') === 0) { 
-          $response = $parameters[1]; // devolve os dados enviados para o execQuery (não há necessidade de ir buscar à BD)
-      } elseif (stripos(trim($sql), 'DELETE') === 0) {
-          $id = $parameters[1][0]; // id do registo para DELETE
-          $deletedData = $this->execQuery('SELECT * FROM movies WHERE id = ?', ['i', [$id]]);
-          if (!empty($deletedData)) {
-            $response = $deletedData[0];
-          } else {
-            $response = null;
-          }
-          $stmt->execute();
-      }
+        $trim = strtoupper(trim($sql));
+        if (strpos($trim, 'SELECT') === 0) {
+          $result = $stmt->get_result();
+          $response = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
+        } elseif (strpos($trim, 'INSERT') === 0) {
+          // return last insert id
+          $response = $this->conn->insert_id;
+        } elseif (strpos($trim, 'UPDATE') === 0) {
+          $response = $this->conn->affected_rows;
+        } elseif (strpos($trim, 'DELETE') === 0) {
+          $response = $this->conn->affected_rows;
+        } else {
+          $response = true;
+        }
 
-      return $response;
+        return $response;
+      } catch (\Throwable $e) {
+        // Log error and return false/empty result to prevent fatal exceptions bubbling up
+        error_log('DB error: ' . $e->getMessage());
+        if (stripos(trim($sql), 'SELECT') === 0) {
+          return [];
+        }
+        return false;
+      }
   }
 
 

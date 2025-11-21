@@ -1,6 +1,6 @@
 <?php // genres/house view ?>
 <style>
-  .album-cover { width: 220px; height: 220px; object-fit: cover; margin: 0 auto 12px; display:block; border-radius:8px; }
+  .album-cover { width: 200px; height: 200px; object-fit: cover; margin: auto 12px; display: inline; border-radius:8px; }
   @media (max-width:768px){ .album-cover{ width:100%; height:auto; } }
 </style>
 <div class="genre-header" style="background-image: url('<?php echo $url_alias; ?>/assets/img/boots_house.jpg'); padding: 60px 0; background-size: cover; background-position: center; color: white; text-align: center;">
