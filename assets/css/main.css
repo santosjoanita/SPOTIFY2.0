@@ -1,0 +1,22 @@
+/* Styles for album/genre item covers */
+.album-cover {
+	width: 220px;
+	height: 220px;
+	object-fit: cover;
+	margin: 0 auto 12px;
+	display: block;
+	border-radius: 8px;
+}
+
+/* center card body text under smaller covers */
+.card .card-body {
+	text-align: left;
+}
+
+@media (max-width: 768px) {
+	.album-cover {
+		width: 100%;
+		height: auto;
+		margin-bottom: 16px;
+	}
+}
