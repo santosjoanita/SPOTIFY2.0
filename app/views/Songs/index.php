@@ -3,12 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Song - Ultimate Music Browser</title>
+    <!-- Fontes Google -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     
+    <!-- CSS Externo -->
     <link rel="stylesheet" href="<?= $url_alias ?>/assets/css/views_songs.css">
 </head>
 <body>
 
+    <!-- 1. HEADER -->
+    <!-- Estilo inline apenas para a imagem de fundo funcionar com o caminho dinâmico -->
     <div class="hero" style="background-image: url('<?= $url_alias ?>/assets/img/cat_songs.jpg');">
         <div class="hero-content">
             <h1>Song</h1>
@@ -16,22 +20,35 @@
         </div>
     </div>
 
+    <!-- 2. BOTÕES -->
     <div class="actions">
         <button onclick="toggleForm()" class="btn btn-add">Adicionar música</button>
         <button onclick="toggleDeleteMode()" class="btn btn-remove" id="btnRemove">Remover Música</button>
     </div>
+    
+  
 
+    <!-- 3. FORMULÁRIO (COM UPLOAD) -->
     <div id="form-container">
         <h3 style="margin-top:0">Nova Música</h3>
-        <form action="<?= $url_alias ?>/Songs/store" method="POST">
+        <!-- enctype="multipart/form-data" é OBRIGATÓRIO para enviar imagens -->
+        <form action="<?= $url_alias ?>/Songs/store" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label>Título *</label>
                 <input type="text" name="title" required placeholder="Ex: Thriller">
             </div>
+            
             <div class="form-group">
                 <label>Artista *</label>
                 <input type="text" name="artist" required placeholder="Ex: Michael Jackson">
             </div>
+            
+            <!-- CAMPO DE IMAGEM -->
+            <div class="form-group">
+                <label>Capa (Opcional)</label>
+                <input type="file" name="cover_image" accept="image/*">
+            </div>
+
             <div class="form-group">
                 <label>Género</label>
                 <select name="genre_id">
@@ -43,18 +60,22 @@
                     <?php endif; ?>
                 </select>
             </div>
+            
             <div class="form-group">
                 <label>Álbum</label>
                 <input type="text" name="album" placeholder="Nome do álbum">
             </div>
+            
             <div class="form-group">
                 <label>Ano</label>
                 <input type="number" name="year" placeholder="Ex: 1982">
             </div>
+            
             <button type="submit" class="btn btn-add" style="width:100%">Guardar</button>
         </form>
     </div>
 
+    <!-- 4. LISTAGEM DE MÚSICAS -->
     <div class="grid-container">
         <?php if(isset($data['title']) && $data['title'] != 'All Songs'): ?>
             <h2 style="text-align:center; text-transform:uppercase; color:#888;">
@@ -69,11 +90,17 @@
                 <?php foreach($data['songs'] as $song): ?>
                 <div class="card">
                     <div class="card-img-wrapper">
+                        <!-- Botão X -->
                         <a href="<?= $url_alias ?>/Songs/delete/<?= $song['id'] ?>" 
                            class="delete-overlay" 
                            onclick="return confirm('Tem a certeza que quer eliminar esta música?')">X</a>
                         
-                        <img src="<?= $url_alias ?>/assets/img/records_albums.jpg" alt="Capa">
+                        <!-- IMAGEM DA CAPA -->
+                        <?php 
+                            // Se existir link na BD usa esse, senão usa o default
+                            $capa = !empty($song['cover_url']) ? $song['cover_url'] : $url_alias . '/assets/img/records_albums.jpg';
+                        ?>
+                        <img src="<?= $capa ?>" alt="Capa">
                     </div>
                     
                     <div class="card-title"><?= htmlspecialchars($song['title']) ?></div>
@@ -81,9 +108,10 @@
                     <div class="card-artist"><?= htmlspecialchars($song['artist']) ?></div>
                     
                     <?php 
-                        $genreName = '';
-                        if (!empty($data['genres'])) {
-                            foreach($data['genres'] as $g) {
+                        $genreName = isset($song['genre_name']) ? $song['genre_name'] : '';
+                        // Fallback se vier apenas o ID e não o nome (depende do método do model usado)
+                        if (empty($genreName) && !empty($data['genres'])) {
+                             foreach($data['genres'] as $g) {
                                 if($g['id'] == $song['genre_id']) { $genreName = $g['genre']; break; }
                             }
                         }
@@ -97,6 +125,7 @@
         </div>
     </div>
 
+    <!-- JS Externo -->
     <script src="<?= $url_alias ?>/assets/js/views_songs.js"></script>
 </body>
 </html>

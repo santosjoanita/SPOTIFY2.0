@@ -3,11 +3,44 @@ namespace app\models;
 use app\core\Db;
 
 class Songs {
+
+    // Buscar todas as músicas
     public static function getAllSongs() {
         $db = new Db();
-        // Use a generic SELECT * to be tolerant to small schema differences in local DBs
-        $sql = "SELECT * FROM songs ORDER BY id DESC";
+        // Juntamos com genres para ter o nome do género
+        $sql = "SELECT songs.*, genres.genre as genre_name 
+                FROM songs 
+                LEFT JOIN genres ON songs.genre_id = genres.id 
+                ORDER BY songs.id DESC";
         return $db->execQuery($sql);
+    }
+
+    // Buscar apenas músicas que têm álbum
+    public static function getSongsWithAlbum() {
+        $db = new Db();
+        $sql = "SELECT songs.*, genres.genre as genre_name 
+                FROM songs 
+                LEFT JOIN genres ON songs.genre_id = genres.id 
+                WHERE songs.album IS NOT NULL AND songs.album != ''
+                ORDER BY songs.id DESC";
+        return $db->execQuery($sql);
+    }
+
+    // Buscar músicas por nome do género (House, Techno, etc.)
+    public static function getSongsByGenreName($genreName) {
+        $db = new Db();
+        $sql = "SELECT songs.*, genres.genre as genre_name 
+                FROM songs 
+                JOIN genres ON songs.genre_id = genres.id 
+                WHERE genres.genre = ?
+                ORDER BY songs.id DESC";
+        return $db->execQuery($sql, ['s', [$genreName]]);
+    }
+
+    // Buscar lista de géneros para o dropdown
+    public static function getGenres() {
+        $db = new Db();
+        return $db->execQuery("SELECT * FROM genres");
     }
 
     public static function createSong(array $data) {
@@ -17,7 +50,7 @@ class Songs {
             $data['title'] ?? null,
             $data['artist'] ?? null,
             $data['album'] ?? null,
-            isset($data['genre_id']) ? $data['genre_id'] : null,
+            isset($data['genre_id']) && $data['genre_id'] !== '' ? $data['genre_id'] : null,
             $data['year'] ?? null,
             $data['cover_url'] ?? null
         ]];
@@ -32,7 +65,7 @@ class Songs {
             $data['title'] ?? null,
             $data['artist'] ?? null,
             $data['album'] ?? null,
-            isset($data['genre_id']) ? $data['genre_id'] : null,
+            isset($data['genre_id']) && $data['genre_id'] !== '' ? $data['genre_id'] : null,
             $data['year'] ?? null,
             $data['cover_url'] ?? null,
             $id
@@ -49,6 +82,4 @@ class Songs {
         return $rows;
     }
 }
-
-
 ?>
