@@ -26,6 +26,37 @@ body {
 .hero h1 { font-family: 'Playfair Display', serif; font-size: 5rem; margin: 0; text-shadow: 0 4px 10px rgba(0,0,0,0.5); }
 .hero p { letter-spacing: 3px; text-transform: uppercase; font-size: 0.9rem; margin-top: 10px; font-weight: 300; }
 
+/*Botão Home*/
+/* --- BOTÃO HOME (Canto Superior Esquerdo) --- */
+.btn-home {
+    position: absolute; /* Permite fixar numa posição exata dentro do pai (hero) */
+    top: 20px;          /* 20px do topo */
+    left: 20px;         /* 20px da esquerda */
+    
+    /* Estilo Visual */
+    background-color: rgba(255, 255, 255, 0.2); /* Branco transparente */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.9rem;
+    
+    /* Garante que fica por cima da imagem e da máscara escura */
+    z-index: 100; 
+    
+    /* Efeitos extra (opcional) */
+    backdrop-filter: blur(5px); /* Desfoca o fundo atrás do botão */
+    border: 1px solid rgba(255,255,255,0.3);
+    transition: all 0.3s ease; /* Suaviza a animação hover */
+}
+
+/* Efeito ao passar o rato */
+.btn-home:hover {
+    background-color: rgba(255, 255, 255, 0.4); /* Fica mais claro */
+    transform: scale(1.05); /* Aumenta ligeiramente */
+}
+
 /*ações e cores dos botoes*/
 .actions { display: flex; justify-content: center; gap: 20px; margin: 40px 0; }
 .btn {

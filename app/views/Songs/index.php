@@ -3,56 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <title>Song - Ultimate Music Browser</title>
-    <!-- Fontes Google -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    
-    <!-- CSS Externo -->
     <link rel="stylesheet" href="<?= $url_alias ?>/assets/css/views_songs.css">
 </head>
 <body>
-
-    <!-- 1. HEADER -->
+<a href="<?= $url_alias ?>/" class="btn-home">← Home</a>
     <!-- Estilo inline apenas para a imagem de fundo funcionar com o caminho dinâmico -->
     <div class="hero" style="background-image: url('<?= $url_alias ?>/assets/img/cat_songs.jpg');">
         <div class="hero-content">
-            <h1>Song</h1>
+            <h1>All Songs</h1>
             <p>THE ULTIMATE MUSIC BROWSER</p>
         </div>
     </div>
 
     <!-- 2. BOTÕES -->
     <div class="actions">
-        <button onclick="toggleForm()" class="btn btn-add">Adicionar música</button>
-        <button onclick="toggleDeleteMode()" class="btn btn-remove" id="btnRemove">Remover Música</button>
+        <button onclick="toggleForm()" class="btn btn-add">Add Music</button>
+        <button onclick="toggleDeleteMode()" class="btn btn-remove" id="btnRemove">Remove Music</button>
     </div>
     
   
 
     <!-- 3. FORMULÁRIO (COM UPLOAD) -->
     <div id="form-container">
-        <h3 style="margin-top:0">Nova Música</h3>
+        <h3 style="margin-top:0">New Song</h3>
         <!-- enctype="multipart/form-data" é OBRIGATÓRIO para enviar imagens -->
         <form action="<?= $url_alias ?>/Songs/store" method="POST" enctype="multipart/form-data">
             <div class="form-group">
-                <label>Título *</label>
+                <label>Title *</label>
                 <input type="text" name="title" required placeholder="Ex: Thriller">
             </div>
             
             <div class="form-group">
-                <label>Artista *</label>
+                <label>Artist *</label>
                 <input type="text" name="artist" required placeholder="Ex: Michael Jackson">
             </div>
             
             <!-- CAMPO DE IMAGEM -->
             <div class="form-group">
-                <label>Capa (Opcional)</label>
+                <label>Cover (Opcional)</label>
                 <input type="file" name="cover_image" accept="image/*">
             </div>
 
             <div class="form-group">
-                <label>Género</label>
+                <label>Genre</label>
                 <select name="genre_id">
-                    <option value="">-- Selecionar --</option>
+                    <option value="">-- Select --</option>
                     <?php if (!empty($data['genres'])): ?>
                         <?php foreach($data['genres'] as $g): ?>
                             <option value="<?= $g['id'] ?>"><?= htmlspecialchars($g['genre']) ?></option>
@@ -62,16 +58,16 @@
             </div>
             
             <div class="form-group">
-                <label>Álbum</label>
-                <input type="text" name="album" placeholder="Nome do álbum">
+                <label>Album</label>
+                <input type="text" name="album" placeholder="Album name">
             </div>
             
             <div class="form-group">
-                <label>Ano</label>
+                <label>Year</label>
                 <input type="number" name="year" placeholder="Ex: 1982">
             </div>
             
-            <button type="submit" class="btn btn-add" style="width:100%">Guardar</button>
+            <button type="submit" class="btn btn-add" style="width:100%">Save</button>
         </form>
     </div>
 
@@ -85,7 +81,7 @@
 
         <div class="grid">
             <?php if(empty($data['songs'])): ?>
-                <p style="text-align:center; width:100%; grid-column: 1/-1;">Ainda não há músicas.</p>
+                <p style="text-align:center; width:100%; grid-column: 1/-1;">No songs yeat. Add some!</p>
             <?php else: ?>
                 <?php foreach($data['songs'] as $song): ?>
                 <div class="card">
@@ -93,7 +89,7 @@
                         <!-- Botão X -->
                         <a href="<?= $url_alias ?>/Songs/delete/<?= $song['id'] ?>" 
                            class="delete-overlay" 
-                           onclick="return confirm('Tem a certeza que quer eliminar esta música?')">X</a>
+                           onclick="return confirm('Are you sure you want to delete this song?')">X</a>
                         
                         <!-- IMAGEM DA CAPA -->
                         <?php 
