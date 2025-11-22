@@ -54,9 +54,20 @@ class App {
         $url = $this->URLArray;
         $startIndex = $this->startIndexFromUrl + 1;
 
-        if (!empty($url[$startIndex]) && isset($url[$startIndex])) {
-            if (method_exists($this->controller, $url[$startIndex]) && !$this->pageNotFound) {
-                $this->method = $url[$startIndex];
+        $requested = $url[$startIndex] ?? '';
+
+        if (!empty($requested) && isset($url[$startIndex])) {
+            // Map numeric genre names to valid method names
+            $mapping = [
+                '1genre' => 'onegenre',
+                '2genre' => 'twogenre',
+                '3genre' => 'threegenre'
+            ];
+
+            $methodToCheck = $mapping[$requested] ?? $requested;
+
+            if (method_exists($this->controller, $methodToCheck) && !$this->pageNotFound) {
+                $this->method = $methodToCheck;
             } else {
                 $this->method = 'pageNotFound';
             }
