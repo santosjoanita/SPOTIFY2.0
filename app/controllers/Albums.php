@@ -2,25 +2,16 @@
 namespace app\controllers;
 
 use app\core\Controller;
+use app\models\Songs as SongsModel;
 
 class Albums extends Controller
 {
     public function index()
     {
-        // exemplo estático de álbuns — pode ser substituído por um model/consulta à BD
-        $albums = [
-            ['title' => 'Nome do album', 'artist' => 'Artista', 'year' => 'Ano', 'cover' => $this->getAssetPath('records_albums.jpg')],
-            ['title' => 'Nome do album', 'artist' => 'Artista', 'year' => 'Ano', 'cover' => $this->getAssetPath('records_albums.jpg')],
-            ['title' => 'Nome do album', 'artist' => 'Artista', 'year' => 'Ano', 'cover' => $this->getAssetPath('records_albums.jpg')],
-            ['title' => 'Nome do album', 'artist' => 'Artista', 'year' => 'Ano', 'cover' => $this->getAssetPath('records_albums.jpg')]
-        ];
-
+        // Busca à base de dados apenas as músicas que têm o campo 'album' preenchido
+        // (Usando a função que já existe no teu Model Songs)
+        $albums = SongsModel::getSongsWithAlbum();
+        
         $this->view('albums/index', ['albums' => $albums]);
-    }
-
-    // utilitário para construir o caminho relativo para assets (mesma base usada nas views)
-    private function getAssetPath($file)
-    {
-        return '/pw/tab1_pw/SPOTIFY2.0/assets/img/' . $file;
     }
 }
