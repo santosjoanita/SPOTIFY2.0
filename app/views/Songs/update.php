@@ -1,47 +1,75 @@
-<?php
-if (empty($data['song'])) {
-    echo '<h3>Música não encontrada.</h3>';
-    echo '<a href="' . $url_alias . '/Songs">Voltar</a>';
-    return;
-}
-$song = $data['song'];
-?>
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Song - Song Browser</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="<?= $url_alias ?>/assets/css/views_songs.css">
+    <style>
+        /* Ajuste para mostrar o formulário sempre nesta página */
+        #form-container { display: block; margin-top: 50px; }
+        body { background-color: #f4f4f4; }
+    </style>
+</head>
+<body>
 
-<h2>Editar Música</h2>
-<form action="<?= $url_alias ?>/Songs/update/<?= htmlspecialchars($song['id']) ?>" method="POST" class="row gx-3 gy-2">
-  <div class="col-md-6">
-    <label for="title">Título:</label>
-    <input type="text" id="title" name="title" value="<?= htmlspecialchars($song['title']) ?>" class="form-control" required>
-  </div>
-  <div class="col-md-6">
-    <label for="artist">Artista:</label>
-    <input type="text" id="artist" name="artist" value="<?= htmlspecialchars($song['artist'] ?? '') ?>" class="form-control" required>
-  </div>
+    <a href="<?= $url_alias ?>/Songs" class="btn-home">← Back to List</a>
 
-  <div class="col-md-6">
-    <label for="genre_id">Género:</label>
-    <select id="genre_id" name="genre_id" class="form-select">
-      <option value="">-- (sem género) --</option>
-      <?php if (!empty($data['genres'])): foreach ($data['genres'] as $g): ?>
-        <option value="<?= htmlspecialchars($g['id']) ?>" <?= (isset($song['genre_id']) && $song['genre_id'] == $g['id']) ? 'selected' : '' ?>><?= htmlspecialchars($g['genre']) ?></option>
-      <?php endforeach; endif; ?>
-    </select>
-  </div>
+    <div class="hero" style="height: 200px; background-image: url('<?= $url_alias ?>/assets/img/cat_songs.jpg');">
+        <div class="hero-content">
+            <h1>Edit Song</h1>
+        </div>
+    </div>
 
-  <div class="col-md-6">
-    <label for="album">Álbum:</label>
-    <input type="text" id="album" name="album" value="<?= htmlspecialchars($song['album'] ?? '') ?>" class="form-control">
-  </div>
+    <div id="form-container">
+        <?php $song = $data['song']; ?>
+        
+        <form action="<?= $url_alias ?>/Songs/update/<?= $song['id'] ?>" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label>Title *</label>
+                <input type="text" name="title" value="<?= htmlspecialchars($song['title']) ?>" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Artist *</label>
+                <input type="text" name="artist" value="<?= htmlspecialchars($song['artist']) ?>" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Change Cover (Optional)</label>
+                <input type="file" name="cover_image" accept="image/*">
+                <small style="color:#777;">Leave empty to keep current cover.</small>
+            </div>
 
-  <div class="col-md-3">
-    <label for="year">Ano:</label>
-    <input type="number" id="year" name="year" value="<?= htmlspecialchars($song['year'] ?? '') ?>" class="form-control">
-  </div>
+            <div class="form-group">
+                <label>Genre</label>
+                <select name="genre_id">
+                    <option value="">-- Select --</option>
+                    <?php if (!empty($data['genres'])): ?>
+                        <?php foreach($data['genres'] as $g): ?>
+                            <option value="<?= $g['id'] ?>" <?= ($song['genre_id'] == $g['id']) ? 'selected' : '' ?>>
+                                <?= htmlspecialchars($g['genre']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Album</label>
+                <input type="text" name="album" value="<?= htmlspecialchars($song['album'] ?? '') ?>">
+            </div>
+            
+            <div class="form-group">
+                <label>Year</label>
+                <input type="number" name="year" value="<?= htmlspecialchars($song['year'] ?? '') ?>">
+            </div>
+            
+            <button type="submit" class="btn btn-add" style="width:100%">Update Song</button>
+            <br><br>
+            <a href="<?= $url_alias ?>/Songs" style="display:block; text-align:center; color:#666; text-decoration:none;">Cancel</a>
+        </form>
+    </div>
 
-  <!-- Cover URL removed from update form -->
-
-  <div class="col-12 mt-2">
-    <button type="submit" class="btn btn-primary">Atualizar Música</button>
-    <a href="<?= $url_alias ?>/Songs" class="btn btn-secondary">Cancelar</a>
-  </div>
-</form>
+</body>
+</html>

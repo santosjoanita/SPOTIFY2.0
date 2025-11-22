@@ -26,38 +26,28 @@ body {
 .hero h1 { font-family: 'Playfair Display', serif; font-size: 5rem; margin: 0; text-shadow: 0 4px 10px rgba(0,0,0,0.5); }
 .hero p { letter-spacing: 3px; text-transform: uppercase; font-size: 0.9rem; margin-top: 10px; font-weight: 300; }
 
-/*Botão Home*/
 /* --- BOTÃO HOME (Canto Superior Esquerdo) --- */
 .btn-home {
-    position: absolute; /* Permite fixar numa posição exata dentro do pai (hero) */
-    top: 20px;          /* 20px do topo */
-    left: 20px;         /* 20px da esquerda */
-    
-    /* Estilo Visual */
-    background-color: rgba(255, 255, 255, 0.2); /* Branco transparente */
+    position: absolute;
+    top: 20px; left: 20px;
+    background-color: rgba(255, 255, 255, 0.2);
     color: white;
     padding: 10px 20px;
     border-radius: 30px;
     text-decoration: none;
     font-weight: bold;
     font-size: 0.9rem;
-    
-    /* Garante que fica por cima da imagem e da máscara escura */
     z-index: 100; 
-    
-    /* Efeitos extra (opcional) */
-    backdrop-filter: blur(5px); /* Desfoca o fundo atrás do botão */
+    backdrop-filter: blur(5px);
     border: 1px solid rgba(255,255,255,0.3);
-    transition: all 0.3s ease; /* Suaviza a animação hover */
+    transition: all 0.3s ease;
 }
-
-/* Efeito ao passar o rato */
 .btn-home:hover {
-    background-color: rgba(255, 255, 255, 0.4); /* Fica mais claro */
-    transform: scale(1.05); /* Aumenta ligeiramente */
+    background-color: rgba(255, 255, 255, 0.4);
+    transform: scale(1.05);
 }
 
-/*ações e cores dos botoes*/
+/* AÇÕES E BOTÕES GERAIS */
 .actions { display: flex; justify-content: center; gap: 20px; margin: 40px 0; }
 .btn {
     padding: 12px 35px; border: none; border-radius: 30px;
@@ -69,8 +59,7 @@ body {
 .btn-add { background-color: #00C853; }
 .btn-remove { background-color: #FF3D00; }
 
-
-/*formulario*/ 
+/* FORMULÁRIO DE ADICIONAR */ 
 #form-container {
     max-width: 600px; margin: 0 auto 40px auto; padding: 25px;
     background: #f9f9f9; border-radius: 10px; display: none;
@@ -82,13 +71,13 @@ body {
     width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;
 }
 
-
+/* GRELHA DE MÚSICAS */
 .grid-container { max-width: 1200px; margin: 0 auto; padding: 0 20px 50px 20px; }
 .grid {
     display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 40px;
 }
 
-
+/* CARDS */
 .card { background: transparent; border: none; position: relative; }
 .card-img-wrapper { position: relative; width: 100%; aspect-ratio: 1/1; margin-bottom: 15px; }
 .card img {
@@ -101,7 +90,7 @@ body {
 .card-artist { font-weight: bold; font-size: 0.95rem; margin: 5px 0; color: #000; }
 .card-meta { font-size: 0.8rem; color: #999; margin-top: 5px; }
 
-/*Botão de remover a música*/ 
+/* BOTÃO DE REMOVER (X - Vermelho - Direita) */ 
 .delete-overlay {
     position: absolute; top: -10px; right: -10px;
     background: red; color: white; width: 30px; height: 30px;
@@ -110,3 +99,14 @@ body {
     box-shadow: 0 2px 5px rgba(0,0,0,0.3); z-index: 10;
 }
 .delete-overlay:hover { transform: scale(1.1); }
+
+/* NOVO: BOTÃO DE EDITAR (Lápis - Azul - Esquerda) */
+.edit-overlay {
+    position: absolute; top: -10px; left: -10px;
+    background: #2196F3; color: white; width: 30px; height: 30px;
+    border-radius: 50%; text-align: center; line-height: 30px;
+    cursor: pointer; text-decoration: none; font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3); z-index: 10;
+    transition: transform 0.2s;
+}
+.edit-overlay:hover { transform: scale(1.1); background: #1976D2; }
