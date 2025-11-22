@@ -2,36 +2,33 @@
 namespace app\controllers;
 
 use app\core\Controller;
+use app\models\Genres as GenresModel;
 
 class Genres extends Controller
 {
     public function oldschool()
     {
-        $items = $this->sampleItems('Old School');
+        // Busca na BD todas as músicas onde o género é "Old School"
+        $items = GenresModel::getSongsByGenreName('Old School');
         $this->view('genres/oldschool', ['items' => $items]);
     }
 
     public function house()
     {
-        $items = $this->sampleItems('House');
+        // Busca na BD todas as músicas onde o género é "House"
+        $items = GenresModel::getSongsByGenreName('House');
         $this->view('genres/house', ['items' => $items]);
     }
 
     public function techno()
     {
-        $items = $this->sampleItems('Tecno');
+        // ATENÇÃO: Verifica na tua BD se está escrito "Techno" ou "Tecno" (ID 3)
+        // Vou usar "Techno" como padrão, se não der altera para "Tecno" aqui.
+        $items = GenresModel::getSongsByGenreName('Techno'); 
+        
+        // Se na tua BD estiver "Tecno", usa a linha abaixo em vez da de cima:
+        // $items = GenresModel::getSongsByGenreName('Tecno');
+        
         $this->view('genres/techno', ['items' => $items]);
-    }
-
-    private function sampleItems($genre)
-    {
-        // Exemplo estático; substituir por consultas ao modelo se desejar
-        $img = '/pw/tab1_pw/SPOTIFY2.0/assets/img/records_albums.jpg';
-        return [
-            ['title' => "$genre Track 1", 'artist' => 'Artista A', 'year' => '2020', 'cover' => $img],
-            ['title' => "$genre Track 2", 'artist' => 'Artista B', 'year' => '2019', 'cover' => $img],
-            ['title' => "$genre Track 3", 'artist' => 'Artista C', 'year' => '2018', 'cover' => $img],
-            ['title' => "$genre Track 4", 'artist' => 'Artista D', 'year' => '2017', 'cover' => $img]
-        ];
     }
 }

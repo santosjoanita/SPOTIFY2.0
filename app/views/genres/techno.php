@@ -1,30 +1,43 @@
-<?php // genres/techno view ?>
-<style>
-  .album-cover { width: 220px; height: 220px; object-fit: cover; margin: 0 auto 12px; display:block; border-radius:8px; }
-  @media (max-width:768px){ .album-cover{ width:100%; height:auto; } }
-</style>
-<div class="genre-header" style="background-image: url('<?php echo $url_alias; ?>/assets/img/techno_concert.jpg'); padding: 60px 0; background-size: cover; background-position: center; color: white; text-align: center;">
-  <h1 style="font-size:48px; margin:0;">TECNO</h1>
-  <p style="letter-spacing:2px; margin-top:8px;">THE ULTIMATE MUSIC BROWSER</p>
-</div>
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Techno Music</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="<?= $url_alias ?>/assets/css/genre.css">
+</head>
+<body>
 
-<div class="container my-5">
-  <?php if (!empty($data['items'])): ?>
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-      <?php foreach ($data['items'] as $item): ?>
-        <div class="col">
-          <div class="card h-100 border-0">
-            <img src="<?= htmlspecialchars($item['cover']) ?>" class="card-img-top album-cover" alt="<?= htmlspecialchars($item['title']) ?>">
-            <div class="card-body">
-              <h5 class="card-title"><?= htmlspecialchars($item['title']) ?></h5>
-              <p class="card-text"><?= htmlspecialchars($item['artist']) ?></p>
-              <p class="card-text"><?= htmlspecialchars($item['year']) ?></p>
-            </div>
-          </div>
+    <div class="hero" style="background-image: url('<?= $url_alias ?>/assets/img/techno_concert.jpg');">
+        <a href="<?= $url_alias ?>/" class="btn-home">← Home</a>
+        <div class="hero-content">
+            <h1>Techno</h1>
+            <p>THE ULTIMATE MUSIC BROWSER</p>
         </div>
-      <?php endforeach; ?>
     </div>
-  <?php else: ?>
-    <p>Nenhum item encontrado.</p>
-  <?php endif; ?>
-</div>
+
+    <div class="grid-container">
+        <div class="grid">
+            <?php if (!empty($data['items'])): ?>
+                <?php foreach ($data['items'] as $item): ?>
+                <div class="card">
+                    <div class="card-img-wrapper">
+                        <?php 
+                             $cover = !empty($item['cover_url']) ? $item['cover_url'] : $url_alias . '/assets/img/records_albums.jpg';
+                        ?>
+                        <img src="<?= $cover ?>" alt="Capa">
+                    </div>
+                    <div class="card-title"><?= htmlspecialchars($item['title']) ?></div>
+                    <div class="card-album"><?= !empty($item['album']) ? htmlspecialchars($item['album']) : 'Single' ?></div>
+                    <div class="card-artist"><?= htmlspecialchars($item['artist']) ?></div>
+                    <div class="card-meta"><?= htmlspecialchars($item['year']) ?></div>
+                </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p style="text-align:center; width:100%; grid-column: 1/-1;">Ainda não há músicas Techno.</p>
+            <?php endif; ?>
+        </div>
+    </div>
+
+</body>
+</html>
