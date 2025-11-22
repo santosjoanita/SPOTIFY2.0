@@ -6,29 +6,27 @@ use app\models\Genres as GenresModel;
 
 class Genres extends Controller
 {
-    public function oldschool()
+    // Página para o género renomeado: 1genre (antigo Old School)
+    public function onegenre($name = null)
     {
-        // Busca na BD todas as músicas onde o género é "Old School"
-        $items = GenresModel::getSongsByGenreName('Old School');
-        $this->view('genres/oldschool', ['items' => $items]);
+        $genreName = !empty($name) ? urldecode($name) : 'Old School';
+        $items = GenresModel::getSongsByGenreName($genreName);
+        $this->view('genres/1genre', ['items' => $items, 'genre' => $genreName]);
     }
 
-    public function house()
+    // Página para o género renomeado: 2genre (antigo House)
+    public function twogenre($name = null)
     {
-        // Busca na BD todas as músicas onde o género é "House"
-        $items = GenresModel::getSongsByGenreName('House');
-        $this->view('genres/house', ['items' => $items]);
+        $genreName = !empty($name) ? urldecode($name) : 'House';
+        $items = GenresModel::getSongsByGenreName($genreName);
+        $this->view('genres/2genre', ['items' => $items, 'genre' => $genreName]);
     }
 
-    public function techno()
+    // Página para o género renomeado: 3genre (antigo Techno)
+    public function threegenre($name = null)
     {
-        // ATENÇÃO: Verifica na tua BD se está escrito "Techno" ou "Tecno" (ID 3)
-        // Vou usar "Techno" como padrão, se não der altera para "Tecno" aqui.
-        $items = GenresModel::getSongsByGenreName('Techno'); 
-        
-        // Se na tua BD estiver "Tecno", usa a linha abaixo em vez da de cima:
-        // $items = GenresModel::getSongsByGenreName('Tecno');
-        
-        $this->view('genres/techno', ['items' => $items]);
+        $genreName = !empty($name) ? urldecode($name) : 'Techno';
+        $items = GenresModel::getSongsByGenreName($genreName);
+        $this->view('genres/3genre', ['items' => $items, 'genre' => $genreName]);
     }
 }
