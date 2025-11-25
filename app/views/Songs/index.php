@@ -9,7 +9,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 // Variável que controla se mostramos os botões ou não
-$isAdmin = ($_SESSION['user_role'] === 'admin');
+$isAdmin = (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin');
 ?>
 
 <!DOCTYPE html>
@@ -18,25 +18,17 @@ $isAdmin = ($_SESSION['user_role'] === 'admin');
     <meta charset="UTF-8">
     <title>Song - Ultimate Music Browser</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="<?= $url_alias ?>/assets/css/views_songs.css">
+    
     <link rel="stylesheet" href="<?= $url_alias ?>/assets/css/main.css">
+    
+    <link rel="stylesheet" href="<?= $url_alias ?>/assets/css/views_songs.css">
 </head>
 <body>
-<<<<<<< HEAD
+    
     <?php require_once 'app/views/partials/header.php'; ?>
-<a href="<?= $url_alias ?>/" class="btn-home">← Home</a>
-    <!-- Estilo inline apenas para a imagem de fundo funcionar com o caminho dinâmico -->
-=======
-    <div style="position:absolute; top:20px; right:20px; z-index:100; display:flex; gap:15px; align-items:center;">
-        <span style="color:white; text-shadow:0 1px 2px rgba(0,0,0,0.8); font-weight:bold;">
-            <?= htmlspecialchars($_SESSION['user_email']) ?> (<?= $_SESSION['user_role'] ?>)
-        </span>
-        <a href="<?= $url_alias ?>/Auth/logout" style="background:rgba(0,0,0,0.5); color:white; padding:5px 15px; text-decoration:none; border-radius:15px; font-size:0.8rem; border:1px solid white;">Sair</a>
-    </div>
 
     <a href="<?= $url_alias ?>/" class="btn-home">← Home</a>
-    
->>>>>>> 6a7d35deaec35b41596748683b52ac7f05421c05
+
     <div class="hero" style="background-image: url('<?= $url_alias ?>/assets/img/cat_songs.jpg');">
         <div class="hero-content">
             <h1>All Songs</h1>
@@ -69,6 +61,7 @@ $isAdmin = ($_SESSION['user_role'] === 'admin');
             </form>
         </div>
     <?php endif; ?>
+
     <div class="grid-container">
         <?php if(isset($data['title']) && $data['title'] != 'All Songs'): ?>
             <h2 style="text-align:center; text-transform:uppercase; color:#888;">

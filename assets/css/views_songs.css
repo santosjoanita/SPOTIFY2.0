@@ -48,7 +48,12 @@ body {
 }
 
 /* AÇÕES E BOTÕES GERAIS */
-.actions { display: flex; justify-content: center; gap: 20px; margin: 40px 0; }
+.actions { 
+    display: flex; 
+    justify-content: center; 
+    gap: 20px; 
+    margin: 40px 0 10px 0; /* Mudámos aqui: 40px topo, 10px baixo */
+}
 .btn {
     padding: 12px 35px; border: none; border-radius: 30px;
     color: white; font-weight: bold; font-size: 1rem; cursor: pointer;
@@ -72,7 +77,11 @@ body {
 }
 
 /* GRELHA DE MÚSICAS */
-.grid-container { max-width: 1200px; margin: 0 auto; padding: 0 20px 50px 20px; }
+.grid-container { 
+    max-width: 1200px; 
+    margin: 40px auto 0 auto; /* Mudámos aqui: 40px no topo obrigatório */
+    padding: 0 20px 50px 20px; 
+}
 .grid {
     display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 40px;
 }
