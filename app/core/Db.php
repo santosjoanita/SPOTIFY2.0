@@ -2,6 +2,7 @@
 
 namespace app\core;
 use mysqli;
+
 class Db {
   private $DBServer;
   private $DBUser;
@@ -10,15 +11,24 @@ class Db {
 
   private $conn;
 
- public function __construct() {
-  $this->DBServer = 'localhost';
-  $this->DBUser   = 'root';
-  $this->DBPass   = '';
-  $this->DBName   = 'melodb';
+  public function __construct() {
+    // --- DADOS DA CLEVER CLOUD ---
 
-  $this->conn = new mysqli($this->DBServer, $this->DBUser, $this->DBPass, $this->DBName);
-  $this->conn->set_charset("utf8");
-}
+    $this->DBServer = 'bg93lad9nxdevap2m0ra-mysql.services.clever-cloud.com';
+    $this->DBUser   = 'ucqpp4eeekja77as';
+    $this->DBPass   = 'fD6nRMHlpSbt2EKFWdnF';
+    $this->DBName   = 'bg93lad9nxdevap2m0ra';
+
+    // Cria a conexão
+    $this->conn = new mysqli($this->DBServer, $this->DBUser, $this->DBPass, $this->DBName);
+
+    // Verifica se houve erro na conexão (importante para debug)
+    if ($this->conn->connect_error) {
+        die("Falha na conexão à Cloud: " . $this->conn->connect_error);
+    }
+
+    $this->conn->set_charset("utf8");
+  }
 
 
   /**
@@ -79,8 +89,6 @@ class Db {
         return false;
       }
   }
-
-
 
   // *1
   // ... Operador splat
