@@ -5,8 +5,10 @@
     <title>Song - Ultimate Music Browser</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="<?= $url_alias ?>/assets/css/views_songs.css">
+    <link rel="stylesheet" href="<?= $url_alias ?>/assets/css/main.css">
 </head>
 <body>
+    <?php require_once 'app/views/partials/header.php'; ?>
 <a href="<?= $url_alias ?>/" class="btn-home">← Home</a>
     <!-- Estilo inline apenas para a imagem de fundo funcionar com o caminho dinâmico -->
     <div class="hero" style="background-image: url('<?= $url_alias ?>/assets/img/cat_songs.jpg');">
@@ -123,5 +125,6 @@
 
     <!-- JS Externo -->
     <script src="<?= $url_alias ?>/assets/js/views_songs.js"></script>
+    <script src="<?= $url_alias ?>/assets/js/main.js"></script>
 </body>
 </html>

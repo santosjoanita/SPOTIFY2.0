@@ -1,22 +1,46 @@
-/* Styles for album/genre item covers */
+/* --- Header / Botão de Login Flutuante --- */
+.site-header { 
+    position: fixed; 
+    top: 20px; 
+    right: 20px; 
+    z-index: 1000; /* Garante que fica por cima de tudo */
+}
+
+/* Estilo dos botões dentro do header */
+.site-header .auth-cta a { 
+    padding: 8px 16px; 
+    border-radius: 20px; 
+    font-weight: bold; 
+    text-decoration: none;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: transform 0.2s;
+}
+
+.site-header .auth-cta a:hover {
+    transform: scale(1.05);
+}
+
+.site-header .auth-cta a.btn-outline-secondary { 
+    background-color: white;
+    color: #333; 
+    border: 1px solid #ccc; 
+}
+
+.site-header .auth-cta a.btn-primary { 
+    color: #fff; 
+    background-color: #0d6efd; 
+    border: 1px solid #0d6efd; 
+}
+
+/* Ajuste para ecrãs pequenos */
+@media (max-width: 576px) {
+    .site-header { top: 10px; right: 10px; }
+    .site-header .auth-cta a { padding: 6px 12px; font-size: 14px; }
+}
+
+/* --- Estilos Gerais de Capas (mantidos do teu ficheiro) --- */
 .album-cover {
-	width: 220px;
-	height: 220px;
-	object-fit: cover;
-	margin: 0 auto 12px;
-	display: block;
-	border-radius: 8px;
+    width: 220px; height: 220px; object-fit: cover;
+    margin: 0 auto 12px; display: block; border-radius: 8px;
 }
-
-/* center card body text under smaller covers */
-.card .card-body {
-	text-align: left;
-}
-
-@media (max-width: 768px) {
-	.album-cover {
-		width: 100%;
-		height: auto;
-		margin-bottom: 16px;
-	}
-}
+.card .card-body { text-align: left; }

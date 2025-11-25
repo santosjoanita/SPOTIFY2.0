@@ -82,8 +82,17 @@ class Songs extends Controller
 
     // Detalhes de uma música
     public function show($id = null) {
-        // ... (mantém a tua lógica de show se quiseres, ou usa a do index)
-        // Para simplificar, vou omitir, pois o design principal é no index
+        if (empty($id)) { header('Location: /pw/tab1_pw/SPOTIFY2.0/Songs'); exit; }
+        
+        // Busca a música pelo ID
+        $song = SongsModel::getSongById((int)$id);
+        if (!$song) {
+            header('Location: /pw/tab1_pw/SPOTIFY2.0/Songs');
+            exit;
+        }
+
+        $genres = SongsModel::getGenres();
+        $this->view('songs/show', ['song' => $song, 'genres' => $genres]);
     }
 
     // Apagar música
