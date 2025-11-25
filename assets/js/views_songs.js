@@ -25,7 +25,7 @@ function toggleDeleteMode() {
         mainBtn.textContent = "Cancel";
         mainBtn.style.background = "#777";
     } else {
-        mainBtn.textContent = "Remover Música";
+        mainBtn.textContent = "Remove Music"; // Corrigi o texto para inglês para bater certo
         mainBtn.style.background = "#FF3D00";
     }
 }

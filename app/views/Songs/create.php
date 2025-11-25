@@ -1,3 +1,6 @@
+<?php
+// header removed: Controller will inject header automatically
+?>
 <h2>Criar Nova Música</h2>
 
 <form action="<?php echo $url_alias; ?>/Songs/store" method="POST" class="row gx-3 gy-2">

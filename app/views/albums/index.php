@@ -7,8 +7,10 @@
     
     <!-- Usamos o MESMO CSS das páginas de géneros -->
     <link rel="stylesheet" href="<?= $url_alias ?>/assets/css/genre.css">
+    <link rel="stylesheet" href="<?= $url_alias ?>/assets/css/main.css">
 </head>
 <body>
+    <?php require_once 'app/views/partials/header.php'; ?>
 
     <!-- HERO SECTION (Imagem de fundo dos álbuns) -->
     <div class="hero" style="background-image: url('<?= $url_alias ?>/assets/img/records_albums.jpg');">
@@ -54,6 +56,6 @@
             <?php endif; ?>
         </div>
     </div>
-
+<script src="<?= $url_alias ?>/assets/js/main.js"></script>
 </body>
 </html>
