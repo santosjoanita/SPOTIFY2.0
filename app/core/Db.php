@@ -45,11 +45,10 @@ class Db {
   }
 
   /**
-  * Método para a execução do SQL
-  * @param  string   $sql         instrução SQL
-  * @param  array    $parameters  array de parâmetros
+  * @param  string   
+  * @param  array    
   *
-  * @return array    $response    dataset
+  * @return array   
   */
   
   // precisa de ser mais genérica porque, nesta versão, apenas responde corretamente para operações sobre a tabela "movies"
@@ -90,9 +89,5 @@ class Db {
       }
   }
 
-  // *1
-  // ... Operador splat
-  // Uma das funções deste operador é transformar um array em parâmetros separados a passar para
-  // determinado método/função (Argument Unpacking)
 
 }

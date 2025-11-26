@@ -1,3 +1,17 @@
+<?php
+// Verificar sessão e permissões
+if(!isset($_SESSION)) { session_start(); }
+
+// Se não estiver com sessão iniciada, manda para o Login
+if (!isset($_SESSION['user_id'])) {
+    header('Location: /pw/tab1_pw/SPOTIFY2.0/Auth/login');
+    exit;
+}
+
+//  controla se mostramos os botões ou não
+$isAdmin = (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin');
+?>
+
 <!DOCTYPE html>
 <html lang="pt">
 <head>

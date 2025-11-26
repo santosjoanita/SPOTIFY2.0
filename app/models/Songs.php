@@ -4,6 +4,8 @@ use app\core\Db;
 
 class Songs {
 
+
+    
     // --- FUNÇÃO NOVA: TOP 3 GÉNEROS ---
     public static function getTopGenres() {
         $db = new Db();

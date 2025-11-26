@@ -1,14 +1,14 @@
 <?php
-// 1. Verificar sessão e permissões
+// Verificar sessão e permissões
 if(!isset($_SESSION)) { session_start(); }
 
-// Se não estiver logado, manda para o Login
+// Se não estiver com sessão iniciada, manda para o Login
 if (!isset($_SESSION['user_id'])) {
     header('Location: /pw/tab1_pw/SPOTIFY2.0/Auth/login');
     exit;
 }
 
-// Variável que controla se mostramos os botões ou não
+//  controla se mostramos os botões ou não
 $isAdmin = (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin');
 ?>
 
@@ -61,7 +61,16 @@ $isAdmin = (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin')
             </form>
         </div>
     <?php endif; ?>
-
+<div class="filter-container" style="display:flex; justify-content:center; margin: 30px 0;">
+        <select id="genreFilter" class="genre-select" style="padding:10px 20px; border-radius:30px; border:1px solid #ccc; min-width:250px;">
+            <option value="all">Todos os Géneros</option>
+            <?php if (!empty($data['genres'])): ?>
+                <?php foreach($data['genres'] as $g): ?>
+                    <option value="<?= $g['id'] ?>"><?= htmlspecialchars($g['genre']) ?></option>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </select>
+    </div>
     <div class="grid-container">
         <?php if(isset($data['title']) && $data['title'] != 'All Songs'): ?>
             <h2 style="text-align:center; text-transform:uppercase; color:#888;">
@@ -102,6 +111,7 @@ $isAdmin = (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin')
             <?php endif; ?>
         </div>
     </div>
+
 
     <script src="<?= $url_alias ?>/assets/js/views_songs.js"></script>
     <script src="<?= $url_alias ?>/assets/js/main.js"></script>

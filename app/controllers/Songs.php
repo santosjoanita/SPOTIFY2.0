@@ -9,7 +9,6 @@ use app\models\Songs as SongsModel;
 
 class Songs extends Controller
 {
-
     public function index()
     {
         $songs = SongsModel::getAllSongs();
@@ -17,7 +16,7 @@ class Songs extends Controller
         $this->view('songs/index', ['songs' => $songs, 'genres' => $genres, 'title' => 'All Songs']);
     }
 
-    // Filtro por Género
+    // Filtro por URL (ex: clicar no card da Home)
     public function genre($name) {
         $name = urldecode($name);
         $songs = SongsModel::getSongsByGenreName($name);
@@ -32,10 +31,10 @@ class Songs extends Controller
         $this->view('songs/index', ['songs' => $songs, 'genres' => $genres, 'title' => 'Álbuns']);
     }
 
-    // Detalhes de uma música (Opcional)
+    // Detalhes de uma música (Opcional, redireciona se não houver ID)
     public function show($id = null) {
         if (empty($id)) { header('Location: /pw/tab1_pw/SPOTIFY2.0/Songs'); exit; }
-        // Podes implementar a view 'songs/get' aqui se quiseres
+        // Se quiseres implementar uma view de detalhes, seria aqui
     }
 
     // =========================================================
@@ -61,9 +60,10 @@ class Songs extends Controller
 
             // Lógica de Upload
             $url_alias = '/pw/tab1_pw/SPOTIFY2.0';
-            $coverPath = $url_alias . '/assets/img/records_albums.jpg'; 
+            $coverPath = $url_alias . '/assets/img/records_albums.jpg'; // Imagem default
 
             if (isset($_FILES['cover_image']) && $_FILES['cover_image']['error'] === 0) {
+                // Sobe 2 níveis (sai de controllers, sai de app) para ir para assets
                 $targetDir = dirname(__DIR__, 2) . '/assets/img/uploads/';
                 if (!is_dir($targetDir)) { mkdir($targetDir, 0777, true); }
 
@@ -116,6 +116,7 @@ class Songs extends Controller
 
         if (empty($id)) { header('Location: /pw/tab1_pw/SPOTIFY2.0/Songs'); exit; }
         
+        // Busca a música específica
         $all = SongsModel::getAllSongs();
         $song = null;
         foreach ($all as $s) { if ($s['id'] == $id) { $song = $s; break; } }
@@ -134,6 +135,7 @@ class Songs extends Controller
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($id)) {
             
+            // Buscar dados atuais para manter a imagem se não houver upload novo
             $allSongs = SongsModel::getAllSongs();
             $currentSong = null;
             foreach($allSongs as $s) {
