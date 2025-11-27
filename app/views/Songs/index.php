@@ -79,38 +79,42 @@ $isAdmin = (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin')
         <?php endif; ?>
 
         <div class="grid">
-            <?php if(empty($data['songs'])): ?>
-                <p style="text-align:center; width:100%; grid-column: 1/-1;">No songs yet.</p>
-            <?php else: ?>
-                <?php foreach($data['songs'] as $song): ?>
-                <div class="card">
-                    <div class="card-img-wrapper">
-                        
-                        <?php if ($isAdmin): ?>
-                            <a href="<?= $url_alias ?>/Songs/delete/<?= $song['id'] ?>" 
-                               class="delete-overlay" 
-                               onclick="return confirm('Delete song?')">X</a>
-                            
-                            <a href="<?= $url_alias ?>/Songs/edit/<?= $song['id'] ?>" 
-                               class="edit-overlay">✏️</a>
-                        <?php endif; ?>
-
-                        <?php $capa = !empty($song['cover_url']) ? $song['cover_url'] : $url_alias . '/assets/img/records_albums.jpg'; ?>
-                        <img src="<?= $capa ?>" alt="Capa">
-                    </div>
+    <?php if(empty($data['songs'])): ?>
+        <p style="text-align:center; width:100%; grid-column: 1/-1;">No songs yet.</p>
+    <?php else: ?>
+        <?php foreach($data['songs'] as $song): ?>
+       
+        <div class="card song-card" data-genre-id="<?= $song['genre_id'] ?>">   <!-- tem de ter o genre id para o filtro funcionar. -->
+            <div class="card-img-wrapper">
+                <?php if ($isAdmin): ?>
+                    <a href="<?= $url_alias ?>/Songs/delete/<?= $song['id'] ?>" 
+                       class="delete-overlay" 
+                       onclick="return confirm('Delete song?')">X</a>
                     
-                    <div class="card-title"><?= htmlspecialchars($song['title']) ?></div>
-                    <div class="card-album"><?= !empty($song['album']) ? htmlspecialchars($song['album']) : 'Single' ?></div>
-                    <div class="card-artist"><?= htmlspecialchars($song['artist']) ?></div>
-                    <div class="card-meta">
-                        <?= isset($song['genre_name']) ? $song['genre_name'] : '' ?> 
-                        <?= !empty($song['year']) ? ' • ' . $song['year'] : '' ?>
-                    </div>
-                </div>
-                <?php endforeach; ?>
-            <?php endif; ?>
+                    <a href="<?= $url_alias ?>/Songs/edit/<?= $song['id'] ?>" 
+                       class="edit-overlay">✏️</a>
+                <?php endif; ?>
+
+                <?php $capa = !empty($song['cover_url']) ? $song['cover_url'] : $url_alias . '/assets/img/records_albums.jpg'; ?>
+                <img src="<?= $capa ?>" alt="Capa">
+            </div>
+            
+            <div class="card-title"><?= htmlspecialchars($song['title']) ?></div>
+            <div class="card-album"><?= !empty($song['album']) ? htmlspecialchars($song['album']) : 'Single' ?></div>
+            <div class="card-artist"><?= htmlspecialchars($song['artist']) ?></div>
+            <div class="card-meta">
+                <?php 
+                    $gName = $song['genre_name'] ?? '';
+                    if (!$gName && !empty($data['genres'])) {
+                        foreach($data['genres'] as $g) { if($g['id'] == $song['genre_id']) { $gName = $g['genre']; break; }}
+                    }
+                ?>
+                <?= $gName ?> <?= !empty($song['year']) ? ' • ' . $song['year'] : '' ?>
+            </div>
         </div>
-    </div>
+        <?php endforeach; ?>
+    <?php endif; ?>
+</div>
 
 
     <script src="<?= $url_alias ?>/assets/js/views_songs.js"></script>
