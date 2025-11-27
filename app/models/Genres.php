@@ -4,17 +4,17 @@ use app\core\Db;
 
 class Genres {
 
-  // Busca apenas a lista de nomes de géneros (para dropdowns)
+  //vai buscar a lista dos géneros para o dropdown
   public static function getAllGenres() {
     $conn = new Db();
     $response = $conn->execQuery('SELECT id, genre FROM genres');
     return $response;
   }
 
-  // NOVA FUNÇÃO: Busca músicas associadas a um género específico
+  // apenas as músicas associadas a um género específico
   public static function getSongsByGenreName($genreName) {
     $conn = new Db();
-    // Fazemos JOIN para garantir que filtramos pelo NOME do género (ex: 'House')
+    // garante que filtra-se o nome pelo género
     $sql = "SELECT songs.*, genres.genre as genre_name 
             FROM songs 
             JOIN genres ON songs.genre_id = genres.id 

@@ -2,7 +2,7 @@
 namespace app\controllers;
 
 use app\core\Controller;
-use app\models\Songs as SongsModel; // Importante: Usar o Model Songs
+use app\models\Songs as SongsModel; // Usa o model songs para obter os álbuns
 
 class Albums extends Controller
 {

@@ -1,5 +1,4 @@
 <?php
-// header removed: Controller will inject header automatically
 ?>
 <h2>Criar Nova Música</h2>
 
@@ -29,7 +28,6 @@
     <label for="year">Ano:</label>
     <input type="number" id="year" name="year" class="form-control">
   </div>
-  <!-- Cover URL removed from create form -->
   <div class="col-12 mt-2">
     <button type="submit" class="btn btn-primary">Criar Música</button>
     <a href="<?php echo $url_alias; ?>/Songs" class="btn btn-secondary">Voltar</a>

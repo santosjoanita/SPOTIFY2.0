@@ -11,33 +11,32 @@ class Album {
         $db = Db::getInstance(); // Conexão
         $req = $db->query('SELECT * FROM albums ORDER BY name ASC');
         
-        // Retorna uma lista de objetos da classe Album
+       
         return $req->fetchAll(PDO::FETCH_CLASS, 'Album');
     }
 
     // Método para buscar UM álbum pelo ID
     public static function getById($id) {
         $db = Db::getInstance();
-        $id = intval($id); // Segurança básica
+        $id = intval($id); // Garante que é um inteiro
         
         $req = $db->prepare('SELECT * FROM albums WHERE id = :id');
         $req->execute(['id' => $id]);
         
-        // Define que o resultado deve ser uma instância desta classe
+      
         $req->setFetchMode(PDO::FETCH_CLASS, 'Album');
         
         return $req->fetch();
     }
 
     // Método para buscar as músicas deste álbum
-    // (Útil para quando abrires a página do álbum)
+
     public function getSongs() {
         $db = Db::getInstance();
         $req = $db->prepare('SELECT * FROM songs WHERE album_id = :id');
         $req->execute(['id' => $this->id]);
         
-        return $req->fetchAll(PDO::FETCH_CLASS, 'Song'); // Assume que tens um model Song
-    }
+        return $req->fetchAll(PDO::FETCH_CLASS, 'Song'); 
 
     // Método para criar um novo álbum (caso precises no futuro)
     public static function create($name, $cover) {

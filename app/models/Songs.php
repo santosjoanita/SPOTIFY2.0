@@ -6,7 +6,7 @@ class Songs {
 
 
     
-    // --- FUNÇÃO NOVA: TOP 3 GÉNEROS ---
+    // TOP 3 GÉNEROS
     public static function getTopGenres() {
         $db = new Db();
         // Conta quantas músicas existem por género, ordena decrescente e pega os 3 primeiros
@@ -19,7 +19,6 @@ class Songs {
         return $db->execQuery($sql);
     }
 
-    // Buscar todas as músicas
     public static function getAllSongs() {
         $db = new Db();
         $sql = "SELECT songs.*, genres.genre as genre_name 
@@ -29,7 +28,7 @@ class Songs {
         return $db->execQuery($sql);
     }
 
-    // Buscar apenas músicas que têm álbum
+    // Pega apenas nas músicas que têm um album 
     public static function getSongsWithAlbum() {
         $db = new Db();
         $sql = "SELECT songs.*, genres.genre as genre_name 
@@ -40,7 +39,7 @@ class Songs {
         return $db->execQuery($sql);
     }
 
-    // Buscar músicas por nome do género
+   
     public static function getSongsByGenreName($genreName) {
         $db = new Db();
         $sql = "SELECT songs.*, genres.genre as genre_name 
@@ -51,13 +50,13 @@ class Songs {
         return $db->execQuery($sql, ['s', [$genreName]]);
     }
 
-    // Buscar lista de géneros para o dropdown
+    
     public static function getGenres() {
         $db = new Db();
         return $db->execQuery("SELECT * FROM genres");
     }
 
-    // Criar Música
+   //CREATE 
     public static function createSong(array $data) {
         $db = new Db();
         $sql = 'INSERT INTO songs (title, artist, album, genre_id, year, cover_url) VALUES (?, ?, ?, ?, ?, ?)';
@@ -72,7 +71,7 @@ class Songs {
         return $db->execQuery($sql, $params);
     }
 
-    // Atualizar Música
+    // UPDATE
     public static function updateSong(int $id, array $data) {
         $db = new Db();
         $sql = 'UPDATE songs SET title = ?, artist = ?, album = ?, genre_id = ?, year = ?, cover_url = ? WHERE id = ?';
@@ -88,7 +87,7 @@ class Songs {
         return $db->execQuery($sql, $params);
     }
 
-    // Apagar Música
+    // DELETE
     public static function deleteSong($id) {
         $db = new Db();
         $sql = 'DELETE FROM songs WHERE id = ?';

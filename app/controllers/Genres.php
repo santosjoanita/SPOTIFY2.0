@@ -6,7 +6,7 @@ use app\models\Genres as GenresModel;
 
 class Genres extends Controller
 {
-    // Página para o género renomeado: 1genre (antigo Old School)
+    // Página para o pimeiro género com mais músicas do mesmo género
     public function onegenre($name = null)
     {
         $genreName = !empty($name) ? urldecode($name) : 'Old School';
@@ -14,7 +14,7 @@ class Genres extends Controller
         $this->view('genres/1genre', ['items' => $items, 'genre' => $genreName]);
     }
 
-    // Página para o género renomeado: 2genre (antigo House)
+    // Página para o 2º género com mais músicas do mesmo género
     public function twogenre($name = null)
     {
         $genreName = !empty($name) ? urldecode($name) : 'House';
@@ -22,7 +22,7 @@ class Genres extends Controller
         $this->view('genres/2genre', ['items' => $items, 'genre' => $genreName]);
     }
 
-    // Página para o género renomeado: 3genre (antigo Techno)
+    // Página para o 3º género com mais músicas do mesmo género
     public function threegenre($name = null)
     {
         $genreName = !empty($name) ? urldecode($name) : 'Techno';

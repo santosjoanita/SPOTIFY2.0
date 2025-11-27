@@ -1,7 +1,7 @@
 <?php
 namespace app\controllers;
 
-// 1. Iniciar sessão para verificar se é admin
+// Aqui vai iniciar a sessão
 if (session_status() === PHP_SESSION_NONE) session_start();
 
 use app\core\Controller;
@@ -16,7 +16,7 @@ class Songs extends Controller
         $this->view('songs/index', ['songs' => $songs, 'genres' => $genres, 'title' => 'All Songs']);
     }
 
-    // Filtro por URL (ex: clicar no card da Home)
+    // Filtro por géneros
     public function genre($name) {
         $name = urldecode($name);
         $songs = SongsModel::getSongsByGenreName($name);
@@ -24,31 +24,29 @@ class Songs extends Controller
         $this->view('songs/index', ['songs' => $songs, 'genres' => $genres, 'title' => $name]);
     }
 
-    // Filtro por Álbuns
+  
     public function albuns() {
         $songs = SongsModel::getSongsWithAlbum();
         $genres = SongsModel::getGenres();
         $this->view('songs/index', ['songs' => $songs, 'genres' => $genres, 'title' => 'Álbuns']);
     }
 
-    // Detalhes de uma música (Opcional, redireciona se não houver ID)
+    
+    
     public function show($id = null) {
         if (empty($id)) { header('Location: /pw/tab1_pw/SPOTIFY2.0/Songs'); exit; }
-        // Se quiseres implementar uma view de detalhes, seria aqui
     }
 
-    // =========================================================
-    // ÁREA PROTEGIDA (APENAS ADMIN)
-    // =========================================================
+ //ESTA ÁREA A BAIXO É SÓ PARA O ADMIN
 
-    // Criar Música (Store)
+    // Criar Música (CREATE)
     public function store()
     {
-        // VERIFICAÇÃO DE SEGURANÇA
+        // aqui vai reverificar se o user é admin ou não
         if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
             header('Location: /pw/tab1_pw/SPOTIFY2.0/Songs'); exit;
-        }
-
+        }   
+        //vai processar os dados do forms
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $title = isset($_POST['title']) ? trim($_POST['title']) : '';
             $artist = isset($_POST['artist']) ? trim($_POST['artist']) : '';
@@ -60,10 +58,10 @@ class Songs extends Controller
 
             // Lógica de Upload
             $url_alias = '/pw/tab1_pw/SPOTIFY2.0';
-            $coverPath = $url_alias . '/assets/img/records_albums.jpg'; // Imagem default
+            $coverPath = $url_alias . '/assets/img/records_albums.jpg'; 
 
             if (isset($_FILES['cover_image']) && $_FILES['cover_image']['error'] === 0) {
-                // Sobe 2 níveis (sai de controllers, sai de app) para ir para assets
+                // Aqui faz-se upload da imagem do user e guarda-se o caminho (DIR - diretório)
                 $targetDir = dirname(__DIR__, 2) . '/assets/img/uploads/';
                 if (!is_dir($targetDir)) { mkdir($targetDir, 0777, true); }
 
@@ -91,10 +89,10 @@ class Songs extends Controller
         exit;
     }
 
-    // Apagar Música
+    // Apagar Música (DELETE)
     public function delete($id = null)
     {
-        // VERIFICAÇÃO DE SEGURANÇA
+        // aqui vai reverificar se o user é admin ou não, denovo.
         if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
             header('Location: /pw/tab1_pw/SPOTIFY2.0/Songs'); exit;
         }
@@ -106,17 +104,17 @@ class Songs extends Controller
         exit;
     }
     
-    // Editar Música (Mostrar Formulário)
+    // Editar Música (UPDATE)
     public function edit($id = null)
     {
-        // VERIFICAÇÃO DE SEGURANÇA
+        // aqui vai verificar denovo se o user é admin ou não 
         if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
             header('Location: /pw/tab1_pw/SPOTIFY2.0/Songs'); exit;
         }
 
         if (empty($id)) { header('Location: /pw/tab1_pw/SPOTIFY2.0/Songs'); exit; }
         
-        // Busca a música específica
+        // vai buscar uma música específica para editar
         $all = SongsModel::getAllSongs();
         $song = null;
         foreach ($all as $s) { if ($s['id'] == $id) { $song = $s; break; } }
@@ -125,10 +123,9 @@ class Songs extends Controller
         $this->view('songs/update', ['song' => $song, 'genres' => $genres]);
     }
     
-    // Atualizar Música (Processar Update)
+    // Atualizar Música (UPDATE 2)
     public function update($id)
     {
-        // VERIFICAÇÃO DE SEGURANÇA
         if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
             header('Location: /pw/tab1_pw/SPOTIFY2.0/Songs'); exit;
         }

@@ -1,5 +1,5 @@
 <?php
-
+//Nesta página fica a gestão das rotas
 namespace app\core;
 
 class App {
@@ -44,7 +44,7 @@ class App {
             }
         }
 
-        // Controlador por defeito (Home)
+        // A página home fica como controller default
         require_once 'app/controllers/Home.php';
         $controllerClass = 'app\\controllers\\Home';
         $this->controller = new $controllerClass();
@@ -57,7 +57,7 @@ class App {
         $requested = $url[$startIndex] ?? '';
 
         if (!empty($requested) && isset($url[$startIndex])) {
-            // Map numeric genre names to valid method names
+            // aqui fazemos o mapeamento dos nomes das rotas para os nomes dos métodos
             $mapping = [
                 '1genre' => 'onegenre',
                 '2genre' => 'twogenre',
@@ -73,7 +73,7 @@ class App {
             }
         }
     }
-
+    // Define os parâmetros a partir da URL
     private function setParamsFromUrl() {
         $url = $this->URLArray;
         $startIndex = $this->startIndexFromUrl + 2;
@@ -84,10 +84,3 @@ class App {
     }
 }
 
-/*
-NOTAS:
-Exemplos de URIs (em testes locais):
-http://localhost
-http://localhost/movie/ - invoca método index() do controlador Movie
-http://localhost/movie/get/5 - invoca método get() do controlador Movie
-*/

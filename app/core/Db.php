@@ -33,8 +33,8 @@ class Db {
 
   /**
   * Método para a definição dos parâmetros para o prepared statement
-  * @param  MySQLiStatement   $stmt         query "preparada".
-  * @param  array             $parameters   array com tipos e respetivos valores (caso existam)
+  * @param  MySQLiStatement  
+  * @param  array           
   */
   private function setParameters($stmt, array $parameters) {
     if (count($parameters)) {
@@ -51,12 +51,12 @@ class Db {
   * @return array   
   */
   
-  // precisa de ser mais genérica porque, nesta versão, apenas responde corretamente para operações sobre a tabela "movies"
+  // Este método faz a execução de queries SQL com prepared statements
   public function execQuery(string $sql, array $parameters = []) {
       try {
         $stmt = $this->conn->prepare($sql);
         if ($stmt === false) {
-          // prepare failed — log and return false
+         
           error_log('DB prepare failed: ' . $this->conn->error);
           return false;
         }
@@ -68,7 +68,7 @@ class Db {
           $result = $stmt->get_result();
           $response = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
         } elseif (strpos($trim, 'INSERT') === 0) {
-          // return last insert id
+          // Retorna o ID do último registro inserido
           $response = $this->conn->insert_id;
         } elseif (strpos($trim, 'UPDATE') === 0) {
           $response = $this->conn->affected_rows;
@@ -80,7 +80,7 @@ class Db {
 
         return $response;
       } catch (\Throwable $e) {
-        // Log error and return false/empty result to prevent fatal exceptions bubbling up
+        // Log de erro para debug
         error_log('DB error: ' . $e->getMessage());
         if (stripos(trim($sql), 'SELECT') === 0) {
           return [];

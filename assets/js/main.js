@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Acessibilidade: tecla ESC tira o foco dos botões
+    //Aqui desfoca os botões de login/logout ao carregar em Escape
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') { 
             const active = document.activeElement;

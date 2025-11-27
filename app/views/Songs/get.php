@@ -1,5 +1,5 @@
 <?php
-// Show single song details
+// vai buscar os detalhes de uma música específica
 if (empty($data['song'])) {
     echo '<h3>Não existe essa música na base de dados.</h3>';
     echo '<a href="' . $url_alias . '/Songs">Voltar</a>';

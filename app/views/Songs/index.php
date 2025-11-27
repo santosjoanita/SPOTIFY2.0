@@ -61,6 +61,7 @@ $isAdmin = (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin')
             </form>
         </div>
     <?php endif; ?>
+    <!-- Aqui começa o filtro por géneros-->
 <div class="filter-container" style="display:flex; justify-content:center; margin: 30px 0;">
         <select id="genreFilter" class="genre-select" style="padding:10px 20px; border-radius:30px; border:1px solid #ccc; min-width:250px;">
             <option value="all">Todos os Géneros</option>
@@ -98,7 +99,7 @@ $isAdmin = (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin')
                 <?php $capa = !empty($song['cover_url']) ? $song['cover_url'] : $url_alias . '/assets/img/records_albums.jpg'; ?>
                 <img src="<?= $capa ?>" alt="Capa">
             </div>
-            
+            <!-- Aqui vai buscar os detalhes de cada música para meter no card -->
             <div class="card-title"><?= htmlspecialchars($song['title']) ?></div>
             <div class="card-album"><?= !empty($song['album']) ? htmlspecialchars($song['album']) : 'Single' ?></div>
             <div class="card-artist"><?= htmlspecialchars($song['artist']) ?></div>

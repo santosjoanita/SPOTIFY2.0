@@ -5,14 +5,14 @@
     <title>Álbuns - Song</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     
-    <!-- Usamos o MESMO CSS das páginas de géneros -->
+    
     <link rel="stylesheet" href="<?= $url_alias ?>/assets/css/genre.css">
     <link rel="stylesheet" href="<?= $url_alias ?>/assets/css/main.css">
 </head>
 <body>
     <?php require_once 'app/views/partials/header.php'; ?>
 
-    <!-- HERO SECTION (Imagem de fundo dos álbuns) -->
+    <!-- (Imagem de fundo dos álbuns) -->
     <div class="hero" style="background-image: url('<?= $url_alias ?>/assets/img/records_albums.jpg');">
         
         <!-- Botão Home -->
@@ -31,7 +31,7 @@
                 <?php foreach ($data['albums'] as $album): ?>
                 <div class="card">
                     <div class="card-img-wrapper">
-                        <!-- Lógica da Imagem: Usa a capa da música ou a default -->
+                       
                         <?php 
                              $cover = !empty($album['cover_url']) ? $album['cover_url'] : $url_alias . '/assets/img/records_albums.jpg';
                         ?>

@@ -2,12 +2,12 @@
 namespace app\controllers;
 
 use app\core\Controller;
-use app\models\User; // Importante: usar o Model criado acima
+use app\models\User; //Tem de usar o model user ao fazer login, para obter as credenciais corretas.
 
 class Auth extends Controller {
 
     public function login() {
-        // Se já estiver logado, manda para a Home
+        // Se o user já tiver login feito, vai para a página home
         if (session_status() === PHP_SESSION_NONE) session_start();
         if (isset($_SESSION['user_id'])) {
             header('Location: /pw/tab1_pw/SPOTIFY2.0/');
@@ -18,11 +18,10 @@ class Auth extends Controller {
             $email = $_POST['email'] ?? '';
             $password = $_POST['password'] ?? '';
 
-            // Usa o método do Model User
+            // vai á função checklogin do model do user 
             $user = User::checkLogin($email, $password);
 
             if ($user) {
-                // Login com sucesso
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['user_email'] = $user['email'];
                 $_SESSION['user_role'] = $user['role']; // admin ou guest
@@ -30,13 +29,12 @@ class Auth extends Controller {
                 header('Location: /pw/tab1_pw/SPOTIFY2.0/');
                 exit;
             } else {
-                // Erro
                 $this->view('auth/login', ['error' => 'Email ou password incorretos']);
                 return;
             }
         }
 
-        // GET: mostra o formulário (Sem Header)
+        // GET: mostra o forms
         $this->view('auth/login');
     }
 

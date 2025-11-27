@@ -1,7 +1,7 @@
 <?php
 use app\models\Songs;
 
-// Busca os Top 3 Géneros
+// Vai buscar os géneros com mais músicas
 $topGenres = Songs::getTopGenres();
 
 // Fallback caso a BD esteja vazia
