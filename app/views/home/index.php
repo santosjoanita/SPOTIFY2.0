@@ -75,6 +75,7 @@ function getGenreImage($genreName, $alias) {
   </div>
 </div>
 
+  
 <div class="authors-section">
     <h2>AUTORAS</h2>
     

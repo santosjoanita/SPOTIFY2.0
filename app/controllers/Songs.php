@@ -58,6 +58,7 @@ class Songs extends Controller
 
             // Lógica de Upload
             $url_alias = '/pw/tab1_pw/SPOTIFY2.0';
+            // Default cover se não houver upload
             $coverPath = $url_alias . '/assets/img/records_albums.jpg'; 
 
             if (isset($_FILES['cover_image']) && $_FILES['cover_image']['error'] === 0) {

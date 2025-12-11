@@ -4,6 +4,8 @@ namespace app\core;
 use mysqli;
 
 class Db {
+  private static $instance = null;
+
   private $DBServer;
   private $DBUser;
   private $DBPass;
@@ -11,8 +13,8 @@ class Db {
 
   private $conn;
 
-  public function __construct() {
-    // --- DADOS DA CLEVER CLOUD ---
+  private function __construct() {
+      // --- DADOS DA CLEVER CLOUD ---
 
     $this->DBServer = 'bg93lad9nxdevap2m0ra-mysql.services.clever-cloud.com';
     $this->DBUser   = 'ucqpp4eeekja77as';
@@ -30,36 +32,36 @@ class Db {
     $this->conn->set_charset("utf8");
   }
 
+  // Singleton para obter a instância da conexão
+  public static function getInstance() {
+      if (self::$instance === null) {
+          self::$instance = new self();
+      }
+      return self::$instance;
+  }
 
   /**
-  * Método para a definição dos parâmetros para o prepared statement
-  * @param  MySQLiStatement  
-  * @param  array           
+  * Define os parâmetros para a query preparada
   */
   private function setParameters($stmt, array $parameters) {
     if (count($parameters)) {
       $types = $parameters[0];
       $values = $parameters[1];
-      $stmt->bind_param($types, ...$values); // *1
+      $stmt->bind_param($types, ...$values);
     }
   }
-
   /**
-  * @param  string   
-  * @param  array    
-  *
-  * @return array   
+  * Método para a execução do SQL
   */
-  
-  // Este método faz a execução de queries SQL com prepared statements
   public function execQuery(string $sql, array $parameters = []) {
       try {
         $stmt = $this->conn->prepare($sql);
         if ($stmt === false) {
-         
+
           error_log('DB prepare failed: ' . $this->conn->error);
           return false;
         }
+
         $this->setParameters($stmt, $parameters);
         $stmt->execute();
 
@@ -68,7 +70,6 @@ class Db {
           $result = $stmt->get_result();
           $response = $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
         } elseif (strpos($trim, 'INSERT') === 0) {
-          // Retorna o ID do último registro inserido
           $response = $this->conn->insert_id;
         } elseif (strpos($trim, 'UPDATE') === 0) {
           $response = $this->conn->affected_rows;
@@ -80,7 +81,7 @@ class Db {
 
         return $response;
       } catch (\Throwable $e) {
-        // Log de erro para debug
+      // log de erro para debug
         error_log('DB error: ' . $e->getMessage());
         if (stripos(trim($sql), 'SELECT') === 0) {
           return [];
@@ -88,6 +89,4 @@ class Db {
         return false;
       }
   }
-
-
 }

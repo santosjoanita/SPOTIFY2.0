@@ -6,7 +6,7 @@ use app\core\Db;
 class User {
     // Procura utilizador por email
     public static function findByEmail($email) {
-        $db = new Db();
+        $db = \app\core\Db::getInstance();
         $sql = "SELECT * FROM users WHERE email = ?";
         $result = $db->execQuery($sql, ['s', [$email]]);
 

@@ -8,7 +8,7 @@ class Songs {
     
     // TOP 3 GÉNEROS
     public static function getTopGenres() {
-        $db = new Db();
+        $db = \app\core\Db::getInstance();        
         // Conta quantas músicas existem por género, ordena decrescente e pega os 3 primeiros
         $sql = "SELECT genres.genre, COUNT(songs.id) as total 
                 FROM songs 
@@ -20,7 +20,7 @@ class Songs {
     }
 
     public static function getAllSongs() {
-        $db = new Db();
+        $db = \app\core\Db::getInstance();        
         $sql = "SELECT songs.*, genres.genre as genre_name 
                 FROM songs 
                 LEFT JOIN genres ON songs.genre_id = genres.id 
@@ -30,7 +30,7 @@ class Songs {
 
     // Pega apenas nas músicas que têm um album 
     public static function getSongsWithAlbum() {
-        $db = new Db();
+        $db = \app\core\Db::getInstance();        
         $sql = "SELECT songs.*, genres.genre as genre_name 
                 FROM songs 
                 LEFT JOIN genres ON songs.genre_id = genres.id 
@@ -41,7 +41,7 @@ class Songs {
 
    
     public static function getSongsByGenreName($genreName) {
-        $db = new Db();
+        $db = \app\core\Db::getInstance();        
         $sql = "SELECT songs.*, genres.genre as genre_name 
                 FROM songs 
                 JOIN genres ON songs.genre_id = genres.id 
@@ -52,13 +52,13 @@ class Songs {
 
     
     public static function getGenres() {
-        $db = new Db();
+        $db = \app\core\Db::getInstance();        
         return $db->execQuery("SELECT * FROM genres");
     }
 
    //CREATE 
     public static function createSong(array $data) {
-        $db = new Db();
+        $db = \app\core\Db::getInstance();        
         $sql = 'INSERT INTO songs (title, artist, album, genre_id, year, cover_url) VALUES (?, ?, ?, ?, ?, ?)';
         $params = ['ssssss', [
             $data['title'] ?? null,
@@ -73,7 +73,7 @@ class Songs {
 
     // UPDATE
     public static function updateSong(int $id, array $data) {
-        $db = new Db();
+        $db = \app\core\Db::getInstance();        
         $sql = 'UPDATE songs SET title = ?, artist = ?, album = ?, genre_id = ?, year = ?, cover_url = ? WHERE id = ?';
         $params = ['ssssssi', [
             $data['title'] ?? null,
@@ -89,7 +89,7 @@ class Songs {
 
     // DELETE
     public static function deleteSong($id) {
-        $db = new Db();
+        $db = \app\core\Db::getInstance();        
         $sql = 'DELETE FROM songs WHERE id = ?';
         return $db->execQuery($sql, ['i', [$id]]);
     }
